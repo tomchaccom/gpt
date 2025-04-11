@@ -22,4 +22,10 @@ public class GptTestController {
     public String gptcall2(@RequestParam(name = "prompt") String prompt){
         return gptService.promptCalling(prompt);
     }
+
+    @GetMapping("/chat3")
+    public String gptcall3(){
+        return gptService.promptCalling("당뇨환자를 위한 오늘의 조언을 한줄로 간단하게 해줘");
+    }
+
 }
