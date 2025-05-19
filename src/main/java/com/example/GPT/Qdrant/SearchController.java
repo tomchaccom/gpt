@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api")
 @RequiredArgsConstructor
 public class SearchController {
 
@@ -30,7 +30,6 @@ public class SearchController {
         for (int i = 0; i < embedding.size(); i++) {
             embeddingArray[i] = embedding.get(i);
         }
-
         // 3. Qdrant 검색
         List<QdrantService.SearchResult> rawResults = qdrantService.searchSimilarCases(embeddingArray);
 
@@ -46,6 +45,31 @@ public class SearchController {
         // 5. 결과 반환
         return ResponseEntity.ok(results);
     }
+
+    @PostMapping("/search/simple")
+    public ResponseEntity<List<QdrantCaseDto>> searchSimpleResult(@RequestBody QuestionRequest questionRequest) {
+        List<Float> embedding = embeddingService.getEmbedding(questionRequest.getQuestion());
+
+        float[] embeddingArray = new float[embedding.size()];
+        for (int i = 0; i < embedding.size(); i++) {
+            embeddingArray[i] = embedding.get(i);
+        }
+
+        List<QdrantService.SearchResult> rawResults = qdrantService.searchSimilarCases(embeddingArray);
+
+        List<QdrantCaseDto> results = rawResults.stream()
+                .map(result -> {
+                    Map<String, String> payload = result.getPayload(); // 타입 일치
+                    String title = payload != null && payload.get("case_id") != null ? payload.get("case_id") : "제목 없음";
+                    String content = payload != null && payload.get("content") != null ? payload.get("content") : "내용 없음";
+                    String similarity = String.format("%.2f%%", result.getScore() * 100);
+                    return new QdrantCaseDto(title, content, similarity);
+                })
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(results);
+    }
+
 
 
 }

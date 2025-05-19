@@ -13,19 +13,15 @@ public class GptTestController {
         this.gptService = gptService;
     }
 
-    @GetMapping("/chat")
+    @GetMapping("/chat2")
     public String gptCall(@RequestParam(name = "prompt") String prompt){
         return gptService.gptCalling(prompt);
     }
 
-    @GetMapping("/chat2")
+    @GetMapping("/chat")
     public String gptcall2(@RequestParam(name = "prompt") String prompt){
         return gptService.promptCalling(prompt);
     }
 
-    @GetMapping("/chat3")
-    public String gptcall3(){
-        return gptService.promptCalling("당뇨환자를 위한 오늘의 조언을 한줄로 간단하게 해줘");
-    }
 
 }

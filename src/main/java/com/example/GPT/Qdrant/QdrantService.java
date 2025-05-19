@@ -26,12 +26,12 @@ public class QdrantService {
     public List<SearchResult> searchSimilarCases(float[] vector) {
         Map<String, Object> body = new HashMap<>();
         body.put("vector", vector);
-        body.put("top", 3); // 유사한 3개 판례 가져오기
+        body.put("top", 1); // 유사한 3개 판례 가져오기
         body.put("with_payload", true);
 
 
         return webClient.post()
-                .uri("/collections/stalking_cases/points/search")
+                .uri("/collections/stalking_cases2/points/search")
                 .header("api-key", qdrantApiKey)
                 .bodyValue(body)
                 .retrieve()
