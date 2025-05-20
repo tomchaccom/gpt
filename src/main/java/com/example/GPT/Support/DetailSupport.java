@@ -14,7 +14,11 @@ public class DetailSupport {
     private Long id;
 
     @Lob
-    private String detail; // 전체를 한번에 다 저장할지.. 아니면 그냥... 흠..
+    private String target;
+    @Lob
+    private String content;
+    @Lob
+    private String procedureInfo;
 
     @OneToOne(mappedBy = "detailSupport")
     private SupportProgram supportProgram;
