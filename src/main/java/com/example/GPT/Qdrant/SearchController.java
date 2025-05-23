@@ -3,10 +3,7 @@ package com.example.GPT.Qdrant;
 import com.example.GPT.Embedding.EmbeddingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -66,6 +63,34 @@ public class SearchController {
                     return new QdrantCaseDto(title, content, similarity);
                 })
                 .collect(Collectors.toList());
+
+        System.out.println("searchSimilarCases 호출됨, question: " + questionRequest.getQuestion());
+
+
+        return ResponseEntity.ok(results);
+    }
+    @GetMapping("/simple")
+    public ResponseEntity<List<QdrantCaseDto>> searchSimpleResultByGet(@RequestParam String question) {
+        List<Float> embedding = embeddingService.getEmbedding(question);
+
+        float[] embeddingArray = new float[embedding.size()];
+        for (int i = 0; i < embedding.size(); i++) {
+            embeddingArray[i] = embedding.get(i);
+        }
+
+        List<QdrantService.SearchResult> rawResults = qdrantService.searchSimilarCases(embeddingArray);
+
+        List<QdrantCaseDto> results = rawResults.stream()
+                .map(result -> {
+                    Map<String, String> payload = result.getPayload();
+                    String title = payload != null && payload.get("case_id") != null ? payload.get("case_id") : "제목 없음";
+                    String content = payload != null && payload.get("content") != null ? payload.get("content") : "내용 없음";
+                    String similarity = String.format("%.2f%%", result.getScore() * 100);
+                    return new QdrantCaseDto(title, content, similarity);
+                })
+                .collect(Collectors.toList());
+
+        System.out.println("searchSimpleResultByGet 호출됨, question: " + question);
 
         return ResponseEntity.ok(results);
     }

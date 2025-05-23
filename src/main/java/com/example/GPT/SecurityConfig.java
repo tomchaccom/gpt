@@ -1,28 +1,53 @@
 package com.example.GPT;
 
+import com.example.GPT.JWT.JwtAuthenticationFilter;
+import com.example.GPT.JWT.JwtUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public JwtAuthenticationFilter jwtAuthenticationFilter(JwtUtil jwtUtil) {
+        return new JwtAuthenticationFilter(jwtUtil);
+    }
+
+    @Bean
+    public OAuth2SuccessHandler oAuth2SuccessHandler(JwtUtil jwtUtil) {
+        return new OAuth2SuccessHandler(jwtUtil);
+    }
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http,
+                                           JwtAuthenticationFilter jwtAuthenticationFilter,
+                                           OAuth2SuccessHandler oAuth2SuccessHandler) throws Exception {
+
         http
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/error", "/webjars/**").permitAll() // 인증 없이 접근 가능한 경로
-                        .anyRequest().authenticated() // 그 외 모든 요청은 인증 필요
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> {})  // CORS 설정은 WebMvcConfigurer에서 따로 설정
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // CORS preflight 허용
+                        .requestMatchers(HttpMethod.GET, "/search", "/search/simple").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/search", "/search/simple").permitAll()
+                        .requestMatchers("/", "/error", "/webjars/**").permitAll()
+                        .anyRequest().authenticated()
                 )
-                .oauth2Login(oauth2Login -> oauth2Login
-                        .defaultSuccessUrl("/loginSuccess") // 로그인 성공 시 리디렉션될 URL
-                        .failureUrl("/loginFailure") // 로그인 실패 시 리디렉션될 URL
+                .oauth2Login(oauth2 -> oauth2
+                        .successHandler(oAuth2SuccessHandler)
+                        .failureUrl("/loginFailure")
                 )
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/") // 로그아웃 성공 시 리디렉션될 URL
+                        .logoutSuccessUrl("/")
                         .permitAll()
-                );
+                )
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
 }
+

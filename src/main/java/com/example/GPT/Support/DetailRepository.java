@@ -9,5 +9,6 @@ import java.util.Optional;
 public interface DetailRepository extends JpaRepository<DetailSupport, Long> {
 
     Optional<DetailSupport> findById(Long id);
+    DetailSupport findByTarget(String target);
 }
 

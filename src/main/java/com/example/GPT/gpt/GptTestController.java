@@ -18,6 +18,7 @@ public class GptTestController {
         return gptService.gptCalling(prompt);
     }
 
+    // 이게 메인
     @GetMapping("/chat")
     public String gptcall2(@RequestParam(name = "prompt") String prompt){
         return gptService.promptCalling(prompt);

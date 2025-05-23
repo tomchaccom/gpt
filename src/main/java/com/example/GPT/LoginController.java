@@ -27,8 +27,4 @@ public class LoginController {
         return "loginFailure"; // loginFailure.html 템플릿으로 이동
     }
 
-    /*@GetMapping("/")
-    public String index() {
-        return "index"; // index.html 템플릿으로 이동
-    }*/
 }
