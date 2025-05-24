@@ -17,7 +17,7 @@
 
 | 기술               | 설명 |
 |--------------------|------|
-| **Java 17**        | 백엔드 언어 |
+| **Java 21**        | 백엔드 언어 |
 | **Spring Boot**    | 백엔드 프레임워크 |
 | **WebClient**      | 외부 API 호출(OpenAI, Qdrant) |
 | **OpenAI API**     | 질문 및 판례 Embedding 생성 (`text-embedding-ada-002`) |
