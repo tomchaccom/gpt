@@ -1,5 +1,6 @@
 package com.example.GPT.Support;
 
+import com.example.GPT.Detail.DetailSupport;
 import jakarta.persistence.*;
 import lombok.Getter;
 

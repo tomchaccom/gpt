@@ -31,7 +31,7 @@ public class QdrantService {
 
 
         return webClient.post()
-                .uri("/collections/stalking_cases2/points/search")
+                .uri("/collections/stalking_cases3/points/search")
                 .header("api-key", qdrantApiKey)
                 .bodyValue(body)
                 .retrieve()

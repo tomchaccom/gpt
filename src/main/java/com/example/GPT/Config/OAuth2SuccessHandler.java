@@ -1,14 +1,12 @@
-package com.example.GPT;
+package com.example.GPT.Config;
 
 import com.example.GPT.JWT.JwtUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
@@ -35,6 +33,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
         // 세션 무효화
         request.getSession().invalidate();
+        System.out.println("세션 무효화");
 
         // 토큰을 응답으로 반환
         response.setContentType("application/json;charset=UTF-8");

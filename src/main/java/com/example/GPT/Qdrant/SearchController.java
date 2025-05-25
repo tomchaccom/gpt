@@ -57,7 +57,7 @@ public class SearchController {
         List<QdrantCaseDto> results = rawResults.stream()
                 .map(result -> {
                     Map<String, String> payload = result.getPayload(); // 타입 일치
-                    String title = payload != null && payload.get("case_id") != null ? payload.get("case_id") : "제목 없음";
+                    String title = payload != null && payload.get("title") != null ? payload.get("title") : "제목 없음";
                     String content = payload != null && payload.get("content") != null ? payload.get("content") : "내용 없음";
                     String similarity = String.format("%.2f%%", result.getScore() * 100);
                     return new QdrantCaseDto(title, content, similarity);
@@ -90,7 +90,7 @@ public class SearchController {
                 })
                 .collect(Collectors.toList());
 
-        System.out.println("searchSimpleResultByGet 호출됨, question: " + question);
+        System.out.println("searchSimpleResultByGet 호출됨, question: " +  question);
 
         return ResponseEntity.ok(results);
     }

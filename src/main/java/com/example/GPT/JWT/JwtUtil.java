@@ -11,7 +11,7 @@ import java.util.Date;
 public class JwtUtil {
 
     /*private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);*/
-    private final long EXPIRATION_TIME = 1000 * 60 * 60 * 2; // 2시간
+    private final long EXPIRATION_TIME = 1000 * 60 * 60 * 20; // 2시간
 
     // 256비트 길이(32바이트)의 시크릿 키 (예시용, 실제론 환경변수로 관리하세요)
     private static final String SECRET = "0123456789abcdef0123456789abcdef"; // 32자(256비트)

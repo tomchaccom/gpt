@@ -1,10 +1,36 @@
+<!-- src/main/resources/static/index.html -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
-    <title>홈</title>
-    <meta charset="UTF-8"> </head>
+  <meta charset="UTF-8">
+  <title>Google 로그인</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+    }
+    .login-button {
+      background-color: #4285F4;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .login-button:hover {
+      background-color: #357ae8;
+    }
+  </style>
+</head>
 <body>
-<h1>환영합니다!</h1>
-<a href="/oauth2/authorization/google">구글 로그인</a>
+
+<h1>구글 계정으로 로그인</h1>
+<a class="login-button" href="/oauth2/authorization/google">
+  Google 로그인
+</a>
+
 </body>
 </html>

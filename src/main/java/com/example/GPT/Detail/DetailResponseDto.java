@@ -1,4 +1,4 @@
-package com.example.GPT.Support;
+package com.example.GPT.Detail;
 
 import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;

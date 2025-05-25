@@ -1,4 +1,4 @@
-package com.example.GPT.Support;
+package com.example.GPT.Detail;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

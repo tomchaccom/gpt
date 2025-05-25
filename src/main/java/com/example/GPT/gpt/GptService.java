@@ -38,7 +38,7 @@ public class GptService {
                
                 ##목적
                 - 사용자의 프롬프트 입력이 스토킹 피해가 맞는 아닌지를 기준에 맞게  True / False 로 판결해라
-                - 판결 시 어떠한 유형의 스토킹인지 출력하기 
+                - 판결 시 어떠한 유형의 스토킹인지 출력하기
                 - 유사한 판례를 제공할 것임. 판례는 0~10 사이의 수를 가지고 있고, 이는 유사도가 높은 순서이다
                 - 스토킹 피해가 아니라면 스토킹 유형은 출력하지 않아도 된다, 하지만 스토킹 판별 기준은 True/False로 출력한다
                 
@@ -64,7 +64,7 @@ public class GptService {
                 - 오프라인 직접 스토킹
                 - 물건 전달형 스토킹
                 - 통신/사이버 스토킹
-                - 개인정보 악용형 스토킹 (신청형 스토킹)
+                - 개인정보 악용형 스토킹
                 - 디지털 성적 스토킹
                 
                 # 스토킹 행위
@@ -78,19 +78,23 @@ public class GptService {
                 - 주거침입 
                 - 통신매체를 이용한 음란행위
                 - 여성폭력
-                
+                 
                 
                 # 응답형식 
                 - json 형식으로 응답하기 
-                - {
-                      "스토킹 유형":"사이버 스토킹",
-                      "스토킹 판결 여부": "False",
-                      "접근 및 물리적 행위": "True",
-                      "통신 및 물건을 통한 괴롭힘" : "True",
-                      "개인정보 및 신분 침해": "True",
-                      "지속성/반복성" : "True"
+               
+                  {
+                    "stalkingType": "오프라인 직접 스토킹",
+                    "isStalkingConvicted": true,
+                    "physicalApproachOrContact": true,
+                    "harassmentViaCommunicationOrItems": false,
+                    "invasionOfPrivacyOrIdentity": false,
+                    "persistenceOrRepetition": true
                   }
-                - 위 형식으로 결과를 출력
+                
+           
+                - 위 형식에서 키 값들은 하나도 빼먹으면 안돼 특히 스토킹 유형을 많이 빼먹던데, 입력받는 프롬프트에 상황에 무조건 맞는 스토킹 유형을 위 유형 중에서 출력해줘야해
+                
                 
                 """;
 

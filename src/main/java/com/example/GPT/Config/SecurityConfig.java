@@ -1,4 +1,4 @@
-package com.example.GPT;
+package com.example.GPT.Config;
 
 import com.example.GPT.JWT.JwtAuthenticationFilter;
 import com.example.GPT.JWT.JwtUtil;
@@ -32,13 +32,14 @@ public class SecurityConfig {
                 .cors(cors -> {})  // CORS 설정은 WebMvcConfigurer에서 따로 설정
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // CORS preflight 허용
-                        .requestMatchers(HttpMethod.GET, "/search", "/search/simple").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/search/**", "/details/**","/supports/**","/chat**","/simple**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/search", "/search/simple").permitAll()
                         .requestMatchers("/", "/error", "/webjars/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth2 -> oauth2
-                        .successHandler(oAuth2SuccessHandler)
+                         .successHandler(oAuth2SuccessHandler)
+                        // .defaultSuccessUrl("/oauth2/success",true)
                         .failureUrl("/loginFailure")
                 )
                 .logout(logout -> logout

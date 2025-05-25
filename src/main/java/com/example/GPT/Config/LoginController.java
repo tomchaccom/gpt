@@ -1,4 +1,4 @@
-package com.example.GPT;
+package com.example.GPT.Config;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;

@@ -1,4 +1,4 @@
-package com.example.GPT.Support;
+package com.example.GPT.Detail;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
