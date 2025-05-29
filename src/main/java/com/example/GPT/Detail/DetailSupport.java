@@ -1,13 +1,17 @@
 package com.example.GPT.Detail;
 
 import com.example.GPT.Support.SupportProgram;
+import com.example.GPT.User.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Setter
 @Getter
+@Setter
+
 public class DetailSupport {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,4 +27,10 @@ public class DetailSupport {
 
     @OneToOne(mappedBy = "detailSupport")
     private SupportProgram supportProgram;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name ="user_id")
+    private User user;
+
+
 }
