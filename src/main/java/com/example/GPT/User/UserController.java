@@ -23,7 +23,7 @@ public class UserController {
         return response;
     }
     @PostMapping("/login")
-    public String loginAndResponseToken(@RequestBody loginRequestDto dto){
+    public loginResponseDto loginAndResponseToken(@RequestBody loginRequestDto dto){
         return userService.login(dto);
     }
 

@@ -35,16 +35,16 @@ public class UserService {
         }
     }
     // 이메일 비밀번호 쌍을 matches로 검사 , 실제로 디비에 어떤 비밀번호가 저장되는지 알 수 없음
-    public String login(loginRequestDto dto) {
+    public loginResponseDto login(loginRequestDto dto) {
         Optional<User> entity =
                 userRepository.findByEmail(dto.getEmail());
 
         if (entity.isPresent()) {
             boolean matches = passwordEncoder.matches(dto.getPassword(), entity.get().getPassword());
             if (matches) {
-                return jwtUtil.generateToken(dto.getEmail());
+                return new loginResponseDto(entity.get().getId(), jwtUtil.generateToken(dto.getEmail()));
             }
-        }   return "이메일 비밀번호가 올바르지 않습니다";
+        }   throw new NoSuchElementException();
 
     }
     // 암호화해서 엔티티를 저장, 그 후 아이디와 성공 메시지를 출력
@@ -53,9 +53,8 @@ public class UserService {
         checkUserEmail(Dto.getEmail());
         User entity = new User(Dto.getEmail(), passwordEncoder.encode(Dto.getPassword()));
         userRepository.save(entity);
-        Long id = userRepository.findByEmail(Dto.getEmail()).
-                orElseThrow(NoSuchElementException::new).getId();
-        return new SignResponseDto(id, "User signed successfully");
+
+        return new SignResponseDto("User signed successfully");
 
     }
     // 본인에게 맞는 지원 제도(왼 오 화면 모두)를 저장하는 용도 -- 저장할 로직을 다 정리하기
